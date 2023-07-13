@@ -42,14 +42,71 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	const int x = 200;
-	const int y = 100;
-	for (int i = 0; i < 3; i++)
-	{
-		gfx.PutPixel(x, y - i - 3, 255, 255, 255);
-		gfx.PutPixel(x - i - 3, y, 255, 255, 255);
+	int x = 400;
+	int y = 300;
+	int r = 255;
+	int g = 255;
+	int b = 255;
+	int Crosshair_length = 4;
 
-		gfx.PutPixel(x, y + i + 3, 255, 255, 255);
-		gfx.PutPixel(x + i + 3, y, 255, 255, 255);
+	const bool Up = wnd.kbd.KeyIsPressed(VK_UP);
+	const bool Down = wnd.kbd.KeyIsPressed(VK_DOWN);
+	const bool Right = wnd.kbd.KeyIsPressed(VK_RIGHT);
+	const bool Left = wnd.kbd.KeyIsPressed(VK_LEFT);
+	const bool ColorChange = wnd.kbd.KeyIsPressed(VK_CONTROL);
+	const bool AltShape = wnd.kbd.KeyIsPressed(VK_SHIFT);
+
+	if (Up)
+	{
+		y -= 100;
+	}
+
+	if (Down)
+	{
+		y += 100;
+	}
+
+	if (Right)
+	{
+		x += 100;
+	}
+	
+	if (Left)
+	{
+		x -= 100;
+	}
+
+	if (ColorChange)
+	{
+		g = 0;
+		b = 0;
+	}
+
+	
+	for (int i = 0; i < Crosshair_length; i++)
+	{
+		//Fuck this alt shape its cancer
+		if (AltShape)
+		{
+			gfx.PutPixel(x + 5, y - i - 2, r, g, b);
+			gfx.PutPixel(x - i + 5, y - 5, r, g, b);
+			
+			gfx.PutPixel(x - 8, y - i - 2, r, g, b);
+			gfx.PutPixel(x - i - 5, y - 5, r, g, b);
+			
+			gfx.PutPixel(x + 5, y - i + 8, r, g, b);
+			gfx.PutPixel(x - i + 5, y + 8, r, g, b);
+
+			gfx.PutPixel(x - 8, y - i + 8, r, g, b);
+			gfx.PutPixel(x - i - 5, y + 8, r, g, b);
+		}
+		else
+		{
+			gfx.PutPixel(x, y - i - 3, r, g, b);
+			gfx.PutPixel(x - i - 3, y, r, g, b);
+
+			gfx.PutPixel(x, y + i + 3, r, g, b);
+			gfx.PutPixel(x + i + 3, y, r, g, b);
+		}
 	}
 }
